@@ -18,13 +18,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/mobile/**", "/sign/**").permitAll()
+                .antMatchers("/users/register", "/mobile/**", "/sign/**").permitAll()
                 .anyRequest().authenticated() // 所有请求都需要安全验证
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-
 
 
 }

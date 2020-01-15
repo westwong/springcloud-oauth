@@ -14,9 +14,9 @@ import com.k2future.oauth2server.util.Assert;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * 短信发送 使用阿里云短信服务
- *  https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11174283.4.4.63c62c42L4Xzd3
+ * https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11174283.4.4.63c62c42L4Xzd3
+ *
  * @author West
  * @date create in 2019/11/5
  */
@@ -36,14 +36,14 @@ public class SendMsgServiceImpl implements SendMsgService {
      */
     private static final String SIGN_NAME = "K2";
     /**
-     *  模版id
+     * 模版id
      */
     private static final String TEMPLATE_CODE = "";
     private static final String OK = "OK";
 
 
     @Override
-    public boolean sendVerificationCode(String mobile,String code) {
+    public boolean sendVerificationCode(String mobile, String code) {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", AccessKey, AccessSecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
@@ -56,12 +56,12 @@ public class SendMsgServiceImpl implements SendMsgService {
         request.putQueryParameter("PhoneNumbers", mobile);
         request.putQueryParameter("SignName", SIGN_NAME);
         request.putQueryParameter("TemplateCode", TEMPLATE_CODE);
-        request.putQueryParameter("TemplateParam", "{code:"+code+"}");
+        request.putQueryParameter("TemplateParam", "{code:" + code + "}");
         try {
             CommonResponse response = client.getCommonResponse(request);
             String data = response.getData();
             JSONObject jsonObject = JSONObject.parseObject(data);
-            Assert.isTrue(OK.equals(jsonObject.getString("Code")),jsonObject.getString("Message"));
+            Assert.isTrue(OK.equals(jsonObject.getString("Code")), jsonObject.getString("Message"));
             return true;
         } catch (ServerException e) {
             e.printStackTrace();

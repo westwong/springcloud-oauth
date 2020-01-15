@@ -91,6 +91,15 @@ public class UserController {
         return RespBuilder.kv2Json(save.getId());
     }
 
+    @PostMapping("/register")
+    @Transactional(rollbackFor = Exception.class)
+    public Map<Object, Object> register(@RequestBody User params) {
+        params. setRoleList(null);
+        return this.save(params);
+    }
+
+
+
     @PostMapping("/find")
     public Map<Object,Object> find(@RequestBody User user){
         User db = userService.findByIdOrUsername(user.getId(),user.getUsername());
