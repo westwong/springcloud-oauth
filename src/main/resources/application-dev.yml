@@ -1,0 +1,22 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: oauth2-server
+  datasource:
+    url: jdbc:mysql://localhost:3306/oauth2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: username
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  redis:
+      host: 192.168.0.45
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.45:12345/eureka/
+  instance:
+    prefer-ip-address: true
