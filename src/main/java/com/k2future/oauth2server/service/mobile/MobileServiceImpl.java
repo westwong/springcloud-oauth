@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
  * @author West
  * @date create in 2019/11/5
  *
- *  短信登录 验证相关
- *
+ * 短信登录 验证相关
  */
 @Service("mobileService")
 public class MobileServiceImpl implements MobileService {
@@ -29,22 +28,22 @@ public class MobileServiceImpl implements MobileService {
     public UserDetails verifyMobileAndCreateIfNotPresent(String mobile, String code) {
 
         boolean verify = verifyMobile(mobile, code);
-        Assert.isTrue(verify,"验证码错误！");
+        Assert.isTrue(verify, "验证码错误！");
         return userService.findByUsernameAndCreateIfAbsent(mobile, UsernameType.PHONE);
     }
 
     @Override
     public boolean verifyMobile(String mobile, String code) {
-        Assert.hasText(code,"验证码为空");
-        Assert.hasText(mobile,"手机好为空");
+        Assert.hasText(code, "验证码为空");
+        Assert.hasText(mobile, "手机好为空");
 
         //获取当前code
         String dbCode = currentCode(mobile);
 
-        if (dbCode == null){
+        if (dbCode == null) {
             return false;
         }
-        if (!StringUtils.equals(dbCode,code)){
+        if (!StringUtils.equals(dbCode, code)) {
             return false;
         }
         return true;
@@ -53,7 +52,7 @@ public class MobileServiceImpl implements MobileService {
     @Override
     public String currentCode(String mobile) {
         Object o = redisUtil.get(MOBILE_CODE + mobile);
-        if (o == null){
+        if (o == null) {
             return null;
         }
         return o.toString();
@@ -61,15 +60,15 @@ public class MobileServiceImpl implements MobileService {
 
     @Override
     public synchronized String generatorCode(String mobile) {
-        Assert.hasText(mobile,"电话号码为空");
-        Assert.isTrue(mobile.length() > 10,"请输入11位手机号");
-        String code = (int) ((Math.random() * 9 + 1) * 100000)+"";
-        saveCode(mobile,code);
+        Assert.hasText(mobile, "电话号码为空");
+        Assert.isTrue(mobile.length() > 10, "请输入11位手机号");
+        String code = (int) ((Math.random() * 9 + 1) * 100000) + "";
+        saveCode(mobile, code);
         return code;
     }
 
     @Override
     public boolean saveCode(String key, String code) {
-        return redisUtil.set(MOBILE_CODE + key,code,expire);
+        return redisUtil.set(MOBILE_CODE + key, code, expire);
     }
 }
