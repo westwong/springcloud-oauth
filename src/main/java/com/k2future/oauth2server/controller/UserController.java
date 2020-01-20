@@ -44,7 +44,7 @@ public class UserController {
 
     @PostMapping("/role/update")
     @Transactional(rollbackFor = Exception.class)
-    public Map<Object, Object> update(@RequestBody User params) {
+    public Map<Object, Object> roleUpdate(@RequestBody User params) {
         params.setPassword(null);
         String clientId = Oauth2UserUtil.currClientId();
         List<Role> roleList = params.getRoleList();
@@ -65,6 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/pwd/update")
+    @Transactional(rollbackFor = Exception.class)
     public Map<Object, Object> password(@RequestBody UserPwd params) {
 
         Assert.isTrue(userService.verifyPassword(params.userId, params.oldPassword), "password is incorrect");
@@ -73,13 +74,22 @@ public class UserController {
         return RespBuilder.succ();
     }
 
+    @PostMapping("/update")
+    @Transactional(rollbackFor = Exception.class)
+    public Map<Object, Object> update(@RequestBody User params) {
+        params.setPassword(null);
+        params.setRoleList(null);
+        userService.update(params);
+        return RespBuilder.succ();
+    }
+
     @PostMapping("/save")
     @Transactional(rollbackFor = Exception.class)
     public Map<Object, Object> save(@RequestBody User params) {
         List<Role> roleList = params.getRoleList();
         if (roleList != null) {
-            String clientId = Oauth2UserUtil.currClientId();
             Set<Role> dbRoles = new HashSet<>(roleList.size());
+            String clientId = Oauth2UserUtil.currClientId();
             for (Role role : roleList) {
                 Role db = roleService.findByRoleNameAndServiceId(role.getRoleName(), clientId);
                 Assert.notNull(db, "role isn't exist !");
