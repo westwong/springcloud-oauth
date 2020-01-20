@@ -124,7 +124,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User findByUsernameAndCreateIfAbsent(String username, String type) {
         User user = userDao.findByUsername(username);
         if (user == null) {
-            user = new User().setUsername(username).setPassword(username.substring(username.length() - 6)).setUsernameType(type);
+            user = new User().setUsername(username).setPassword("123456").setUsernameType(type);
+            switch (type) {
+                case UsernameType.OPEN_ID:
+                    user.setOpenId(username);
+                    break;
+                case UsernameType.PHONE:
+                    user.setPhone(username);
+                    break;
+                default:
+                    break;
+            }
             this.save(user);
         }
         return user;

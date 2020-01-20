@@ -54,6 +54,12 @@ public class User implements UserDetails {
     @Column(length = 15)
     private String usernameType;
 
+    @Column(length = 15)
+    private String phone;
+
+    @Column(length = 32)
+    private String openId;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
