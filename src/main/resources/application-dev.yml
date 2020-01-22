@@ -5,9 +5,9 @@ spring:
   application:
     name: oauth2-server
   datasource:
-    url: jdbc:mysql://localhost:3306/oauth2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-    username: username
-    password: password
+    url: jdbc:mysql://192.168.0.45:3306/oauth2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
@@ -20,3 +20,13 @@ eureka:
       defaultZone: http://192.168.0.45:12345/eureka/
   instance:
     prefer-ip-address: true
+
+ali:
+  message:
+    access-key: 123
+    access-secret: 123
+
+wechat:
+  mini-app:
+    app-id: 123
+    app-key: 123

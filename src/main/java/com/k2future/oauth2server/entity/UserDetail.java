@@ -49,7 +49,7 @@ public class UserDetail implements Serializable {
     private String nation;
 
     private String instruction;
-    @Column(length = 100)
+
     private String images;
 
     private LocalDate birthday;

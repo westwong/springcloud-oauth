@@ -11,11 +11,12 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.k2future.oauth2server.util.Assert;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
  * 短信发送 使用阿里云短信服务
- * https://help.aliyun.com/document_detail/101414.html?spm=a2c4g.11174283.4.4.63c62c42L4Xzd3
+ * https://help.aliyun.com/document_detail/101414.html
  *
  * @author West
  * @date create in 2019/11/5
@@ -26,25 +27,27 @@ public class SendMsgServiceImpl implements SendMsgService {
     /**
      * 阿里云  appKey
      */
-    private static final String AccessKey = "";
+    @Value("${ali.message.access-key}")
+    private   String accessKey = "";
     /**
      * 阿里云 appSecret
      */
-    private static final String AccessSecret = "";
-    /**
-     * 签名
-     */
-    private static final String SIGN_NAME = "K2";
+    @Value("${ali.message.access-secret}")
+    private  String accessSecret = "";
     /**
      * 模版id
      */
     private static final String TEMPLATE_CODE = "";
+    /**
+     * 签名
+     */
+    private static final String SIGN_NAME = "K2";
     private static final String OK = "OK";
 
 
     @Override
     public boolean sendVerificationCode(String mobile, String code) {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", AccessKey, AccessSecret);
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKey, accessSecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();

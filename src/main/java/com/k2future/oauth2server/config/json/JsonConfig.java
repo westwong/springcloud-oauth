@@ -25,7 +25,10 @@ import java.util.List;
  * 所以弃用了 ，选择jackson ，但是fastjson 工具还蛮好用的
  * tips: bean 转 js0n --->fastjson
  * json 转 bean --->Gjson
+ *
+ * 喜欢fastjson的可以用这个配置
  */
+@Deprecated
 // @Configuration
 public class JsonConfig {
 

@@ -3,6 +3,8 @@ package com.k2future.oauth2server.service.wechat;
 import com.alibaba.fastjson.JSON;
 import com.k2future.oauth2server.entity.WeChatMessage;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -12,16 +14,27 @@ import java.util.Map;
  * @author West
  * @date create in 2019/11/7
  */
+@Component
 public class WeChatUtils {
 
     /**
      * Api key
      */
-    private static final String APP_ID = "";
+    private static  String appId = "";
     /**
      * Api key
      */
-    private static final String APP_KEY = "";
+    private static  String appKey = "";
+
+    @Value("${wechat.mini-app.app-id}")
+    public void setAppId(String appId){
+        WeChatUtils.appId = appId;
+    }
+    @Value("${wechat.mini-app.app-key}")
+    public void setAppKey(String appKey){
+        WeChatUtils.appKey = appKey;
+    }
+
     /**
      * 地址解析成坐标
      */
@@ -45,8 +58,8 @@ public class WeChatUtils {
     public static WeChatMessage getMessage(String code) {
 
         Map<String, String> params = new HashMap<>(10);
-        params.put("appId", APP_ID);
-        params.put("appKey", APP_KEY);
+        params.put("appId", appId);
+        params.put("appKey", appKey);
         params.put("code",code);
         RestTemplate restTemplate = new RestTemplate();
         String msg = restTemplate.getForObject(AUTH_API,String.class, params);
