@@ -36,7 +36,7 @@ public class WeChatUtils {
     }
 
     /**
-     * 地址解析成坐标
+     * 获取openId
      */
     private static final String AUTH_API = "https://api.weixin.qq.com/sns/jscode2session?appid={appId}&secret={appKey}&js_code={code}&grant_type=authorization_code";
 
