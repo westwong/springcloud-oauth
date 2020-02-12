@@ -37,7 +37,7 @@ public class SendMsgServiceImpl implements SendMsgService {
     /**
      * 模版id
      */
-    private static final String TEMPLATE_CODE = "";
+    private static final String TEMPLATE_CODE = "SMS_176880275";
     /**
      * 签名
      */
